@@ -1,0 +1,33 @@
+{
+  "name": "advanced-selenium-ide",
+  "version": "1.0.0",
+  "description": "selenium ide with more advanced features",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/SrineshNisala/advanced-selenium-ide.git"
+  },
+  "keywords": [
+    "selenium",
+    "ide",
+    "advanced"
+  ],
+  "author": "Srinesh Nisala",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/SrineshNisala/advanced-selenium-ide/issues"
+  },
+  "homepage": "https://gitlab.com/SrineshNisala/advanced-selenium-ide#README",
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.5.2",
+    "ts-loader": "^4.4.2",
+    "typescript": "^2.9.2",
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8"
+  }
+}
