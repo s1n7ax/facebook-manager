@@ -24,6 +24,7 @@
   },
   "homepage": "https://gitlab.com/SrineshNisala/advanced-selenium-ide#README",
   "devDependencies": {
+    "@types/chrome": "0.0.72",
     "copy-webpack-plugin": "^4.5.2",
     "ts-loader": "^4.4.2",
     "typescript": "^2.9.2",
