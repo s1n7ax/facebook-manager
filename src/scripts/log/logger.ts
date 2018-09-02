@@ -13,11 +13,11 @@ export default class Logger {
         console.warn(message, data);
     }
 
-    static error(message: string, data?:any) {
+    static error(error: Error, data?:any) {
         data = !data && {};
-        message = `[ERROR] ${this.getTimestamp()} ${message}`;
+        let message = `[ERROR] ${this.getTimestamp()} ${error.message}`;
 
-        console.error(message, data);
+        console.error(message, error, data);
     }
 
     static debug(message: string, data?:any) {
