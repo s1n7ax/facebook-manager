@@ -56,7 +56,7 @@ class Background {
 }
 
 /**
- * Listen to own time messages
+ * Listen to one time messages
  */
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     let message = request as CommandRequestModel;
