@@ -20,6 +20,13 @@ export default class Logger {
         console.error(message, data);
     }
 
+    static degub(message: string, data?:any) {
+        data = !data && {};
+        message = `[DEGUB] ${this.getTimestamp()} ${message}`;
+
+        console.log(message, data);
+    }
+
     static getTimestamp(date?: Date) {
         date = !date && new Date();
 
