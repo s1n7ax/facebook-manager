@@ -1,4 +1,3 @@
-import Commands from "../command/commands";
 import ChromeWindow from "./chrome-window";
 import Window = chrome.windows.Window;
 import ChromeTab from "./chrome-tab";

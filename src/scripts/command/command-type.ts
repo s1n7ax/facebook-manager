@@ -1,9 +1,9 @@
 /**
  * defines all the commands available
  */
-enum Commands {
+enum CommandType {
     CREATE_TAB,
 
 }
 
-export default Commands;
+export default CommandType;
