@@ -3,7 +3,7 @@
  */
 enum CommandType {
     CREATE_TAB,
-
+    EXECUTE_SCRIPT,
 }
 
 export default CommandType;
