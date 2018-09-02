@@ -26,6 +26,10 @@ module.exports = {
         ]
     },
     plugins: [
+        /**
+         * copy all the files except typescript files as it is to /dist
+         * this is necessary manifest, views etc.. to be copied to /dist
+         */
         new CopyWebpackPlugin([
             { from: srcPath, to: distPath, ignore: ['*.ts','*.tsx'] }
         ]),
