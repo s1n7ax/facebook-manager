@@ -63,10 +63,6 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         }
             break;
 
-        /**
-         * @TODO
-         * default action should be removed in the production
-         */
         default: {
             sendResponse(new ErrorResponseModel(new Error()));
             throw new Error("Invalid command type: " + request.command);
