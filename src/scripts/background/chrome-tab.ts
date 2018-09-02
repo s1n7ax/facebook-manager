@@ -15,7 +15,7 @@ export default class ChromeTab {
     static create(createProperties: CreateProperties): Promise<Tab> {
         return new Promise(((resolve, reject) => {
             chrome.tabs.create(createProperties, (tab) => {
-                if(chrome.runtime.lastError)
+                if (chrome.runtime.lastError)
                     reject(chrome.runtime.lastError);
                 else
                     resolve(tab);
