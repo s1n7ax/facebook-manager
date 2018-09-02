@@ -20,7 +20,7 @@ export default class Logger {
         console.error(message, data);
     }
 
-    static degub(message: string, data?:any) {
+    static debug(message: string, data?:any) {
         data = !data && {};
         message = `[DEGUB] ${this.getTimestamp()} ${message}`;
 
