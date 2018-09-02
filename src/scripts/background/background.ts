@@ -4,6 +4,7 @@ import Window = chrome.windows.Window;
 import ChromeTab from "./chrome-tab";
 import {CreateTabResponseModel} from "../command/create-tab-response-model";
 import {ErrorResponseModel} from "../command/error-response-model";
+import Logger from "../log/logger";
 
 /**
  * Background
@@ -27,14 +28,29 @@ class Background {
      *     tab id of the created tab
      */
     static async createTab(): Promise<number> {
-        if (window === null || !await ChromeWindow.exist(this.window.id)) {
-            this.window = await ChromeWindow.create({url: this.facebook});
-            return this.window.tabs[0].id;
+        Logger.info("createTab - Started!");
+
+        try {
+
+            // create window if automation window is null of doesn't exist
+            if (window === null || !await ChromeWindow.exist(this.window.id)) {
+                this.window = await ChromeWindow.create({url: this.facebook});
+
+                Logger.debug("createTab: no existing window! creating new window!");
+                Logger.info("createTab - Successful!", this.window.tabs[0]);
+
+                return this.window.tabs[0].id;
+            }
+
+            // create new tab in automation window
+            let tab = await ChromeTab.create({windowId: this.window.id});
+
+            Logger.info("createTab - Successful!", tab);
+            return tab.id;
+
+        } catch (e) {
+            Logger.error("createTab: - Failed!", e);
         }
-
-        let tab = await ChromeTab.create({windowId: this.window.id});
-
-        return tab.id;
     }
 }
 
@@ -47,14 +63,17 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         }
             break;
 
-
+        /**
+         * @TODO
+         * default action should be removed in the production
+         */
         default: {
             sendResponse(new ErrorResponseModel(new Error()));
             throw new Error("Invalid command type: " + request.command);
         }
     }
 
-    // this will ensure the response callback wait for background sendResponse() method
+    // return true notify messaging runtime response callback to wait for sendResponse() method call
     return true;
 });
 
