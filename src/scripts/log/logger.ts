@@ -1,17 +1,23 @@
 export default class Logger {
     static info(message: string, data?:any) {
         data = !data && {};
+        message = `[INFO] ${this.getTimestamp()} ${message}`;
+
         console.log(message, data);
     }
 
     static warn(message: string, data?:any) {
         data = !data && {};
+        message = `[WARN] ${this.getTimestamp()} ${message}`;
+
         console.warn(message, data);
     }
 
-    static error(error: Error, data?:any) {
+    static error(message: string, data?:any) {
         data = !data && {};
-        console.error(error, data);
+        message = `[ERROR] ${this.getTimestamp()} ${message}`;
+
+        console.error(message, data);
     }
 
     static getTimestamp(date?: Date) {
