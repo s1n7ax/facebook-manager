@@ -24,7 +24,5 @@
       ]
     }
   ],
-  "browser_action": {
-    "default_popup": "views/popup.html"
-  }
+  "browser_action": {}
 }
