@@ -1,7 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-
+const webpack = require('webpack');
 
 
 let distPath = path.resolve(__dirname, 'dist');
@@ -10,6 +9,7 @@ let scriptsPath = path.resolve(__dirname, srcPath, 'scripts');
 
 module.exports = {
     mode: 'development',
+
     entry: {
         content: path.resolve(scriptsPath, 'content', 'content.ts'),
         background: path.resolve(scriptsPath, 'background', 'background.ts'),
@@ -28,7 +28,18 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             { from: srcPath, to: distPath, ignore: ['*.ts','*.tsx'] }
-        ])
+        ]),
+
+        /**
+         * replace process.env.NODE_ENV with system NODE_ENV
+         * as a result, all the usage will be removed at the compile time
+         * more details: https://stackoverflow.com/questions/45776264/
+         */
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            },
+        })
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
