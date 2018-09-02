@@ -1,9 +1,11 @@
+import CommandType from "../command/command-type";
 import ChromeWindow from "./chrome-window";
 import Window = chrome.windows.Window;
 import ChromeTab from "./chrome-tab";
 import {CreateTabResponseModel} from "../command/create-tab-response-model";
 import {ErrorResponseModel} from "../command/error-response-model";
 import Logger from "../log/logger";
+import CommandRequestModel from "../command/command-request-model";
 
 /**
  * Background
@@ -55,8 +57,12 @@ class Background {
 
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-    switch (request.command) {
-        case Commands.CREATE_TAB: {
+    let message = request as CommandRequestModel;
+
+    Logger.debug("message received: ", message);
+
+    switch (message.command) {
+        case CommandType.CREATE_TAB: {
             let tabId = await Background.createTab();
             sendResponse(new CreateTabResponseModel(tabId));
         }
