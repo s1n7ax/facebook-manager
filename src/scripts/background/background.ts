@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 /**
- * Create application window when popup icon is cliced
+ * Create application window when popup icon is clicked
  */
 chrome.browserAction.onClicked.addListener(async () => {
     await ChromeWindow.create({

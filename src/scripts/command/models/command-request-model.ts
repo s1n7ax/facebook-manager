@@ -1,4 +1,4 @@
-import CommandType from "./command-type";
+import CommandType from "../command-type";
 
 export default class CommandRequestModel {
     command: CommandType;
