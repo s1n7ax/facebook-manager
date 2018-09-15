@@ -1,26 +1,26 @@
 export default class Logger {
-    static info(message: string, data?:any) {
+    static info(message: string, data?: any) {
         data = !data && {};
         message = `[INFO] ${this.getTimestamp()} ${message}`;
 
         console.log(message, data);
     }
 
-    static warn(message: string, data?:any) {
+    static warn(message: string, data?: any) {
         data = !data && {};
         message = `[WARN] ${this.getTimestamp()} ${message}`;
 
         console.warn(message, data);
     }
 
-    static error(error: Error, data?:any) {
+    static error(error: Error, data?: any) {
         data = !data && {};
         let message = `[ERROR] ${this.getTimestamp()} ${error.message}`;
 
         console.error(message, error, data);
     }
 
-    static debug(message: string, data?:any) {
+    static debug(message: string, data?: any) {
         data = !data && {};
         message = `[DEGUB] ${this.getTimestamp()} ${message}`;
 
@@ -31,7 +31,7 @@ export default class Logger {
         date = !date && new Date();
 
         let year = date.getFullYear();
-        let month = date.toLocaleString("en-us", { month: "short" });
+        let month = date.toLocaleString("en-us", {month: "short"});
         let day = date.getDate();
 
         let hours = date.getHours();

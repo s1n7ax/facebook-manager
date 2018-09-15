@@ -5,10 +5,10 @@ import {CreateTabResponseModel} from "../command/models/create-tab-response-mode
 import {ErrorResponseModel} from "../command/models/error-response-model";
 import Logger from "../log/logger";
 import CommandRequestModel from "../command/models/command-request-model";
-import Window = chrome.windows.Window;
-import MessageSender = chrome.runtime.MessageSender;
 import ExecuteScriptRequestModel from "../command/models/execute-script-request-model";
 import ExecuteScriptResponseModel from "../command/models/execute-script-response-model";
+import Window = chrome.windows.Window;
+import MessageSender = chrome.runtime.MessageSender;
 
 /**
  * CommandManager defines high level methods
@@ -51,8 +51,8 @@ export default class CommandManager {
 
                 try {
                     tabId = await CommandManager.createTab();
-                    sendResponse(new CreateTabResponseModel(tabId)) ;
-                } catch(e) {
+                    sendResponse(new CreateTabResponseModel(tabId));
+                } catch (e) {
                     Logger.error(e);
                     sendResponse(new ErrorResponseModel(e));
                 }

@@ -31,7 +31,7 @@ module.exports = {
          * this is necessary manifest, views etc.. to be copied to /dist
          */
         new CopyWebpackPlugin([
-            { from: srcPath, to: distPath, ignore: ['*.ts','*.tsx'] }
+            {from: srcPath, to: distPath, ignore: ['*.ts', '*.tsx']}
         ]),
 
         /**
