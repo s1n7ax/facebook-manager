@@ -4,7 +4,7 @@ import ChromeTab from "./chrome-tab";
 import {CreateTabResponseModel} from "../command/models/create-tab-response-model";
 import {ErrorResponseModel} from "../command/models/error-response-model";
 import Logger from "../log/logger";
-import CommandRequestModel from "../command/models/command-request-model";
+import ICommandRequestModel from "../command/models/i-command-request-model";
 import ExecuteScriptRequestModel from "../command/models/execute-script-request-model";
 import ExecuteScriptResponseModel from "../command/models/execute-script-response-model";
 import Window = chrome.windows.Window;
@@ -37,7 +37,7 @@ export default class CommandManager {
      *      message response callback
      */
     static async handleCommands(request: any, sender: MessageSender, sendResponse: (response: any) => void): Promise<void> {
-        let message = request as CommandRequestModel;
+        let message = request as ICommandRequestModel;
 
         Logger.debug("message received: ", message);
 
@@ -63,7 +63,7 @@ export default class CommandManager {
              * EXECUTE_SCRIPT
              */
             case CommandType.EXECUTE_SCRIPT: {
-                let data = message.data as ExecuteScriptRequestModel;
+                let data = request as ExecuteScriptRequestModel;
 
                 try {
                     let result = await ChromeTab.executeScript(data.tabId, data.injectDetails);
