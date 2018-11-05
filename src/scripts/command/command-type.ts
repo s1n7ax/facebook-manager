@@ -8,6 +8,7 @@ enum CommandType {
     CLICK,
     TYPE,
     SELECT,
+    WAIT,
 }
 
 export default CommandType;

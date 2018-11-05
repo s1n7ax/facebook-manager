@@ -3,7 +3,7 @@ import IPageAction from "./i-page-action";
 import NavigateRequestModel from "../../command/models/navigate-request-model";
 
 @StaticImplements<IPageAction>()
-export default class Navigate {
+export default class ActionNavigate {
 
     static run(data: NavigateRequestModel) {
         this.exec(data.url)

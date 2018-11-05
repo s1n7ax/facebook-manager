@@ -6,8 +6,11 @@ import By from "../locators/by";
 import ClickResponseModel from "../../command/models/click-response-model";
 
 
+/**
+ * Click - handle click on an element
+ */
 @StaticImplements<IPageAction>()
-export default class Click {
+export default class ActionClick {
 
     static run(data: ClickRequestModel): ClickResponseModel {
         this.exec(data.by, data.value);
