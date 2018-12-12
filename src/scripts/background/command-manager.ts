@@ -3,10 +3,12 @@ import ChromeWindow from "./chrome-window";
 import ChromeTab from "./chrome-tab";
 import {CreateTabResponseModel} from "../command/models/create-tab-response-model";
 import {ErrorResponseModel} from "../command/models/error-response-model";
-import Logger from "../log/logger";
 import ICommandRequestModel from "../command/models/i-command-request-model";
 import ExecuteScriptRequestModel from "../command/models/execute-script-request-model";
 import ExecuteScriptResponseModel from "../command/models/execute-script-response-model";
+import LoggerClient from "../log/logger-client";
+import LogTypes from "../log/log-types";
+import ScriptLevel from "../common/script-level";
 import Window = chrome.windows.Window;
 import MessageSender = chrome.runtime.MessageSender;
 
@@ -22,6 +24,7 @@ import MessageSender = chrome.runtime.MessageSender;
 export default class CommandManager {
     private static window: Window = null;
     private static facebook = "https://www.facebook.com";
+    private static logger = new LoggerClient(ScriptLevel.Background);
 
 
     /**
@@ -39,7 +42,7 @@ export default class CommandManager {
     static async handleCommands(request: any, sender: MessageSender, sendResponse: (response: any) => void): Promise<void> {
         let message = request as ICommandRequestModel;
 
-        Logger.debug("message received: ", message);
+        this.logger.send("Background command received", LogTypes.INFO, request);
 
         switch (message.command) {
 
@@ -53,7 +56,7 @@ export default class CommandManager {
                     tabId = await CommandManager.createTab();
                     sendResponse(new CreateTabResponseModel(tabId));
                 } catch (e) {
-                    Logger.error(e);
+                    this.logger.send(e, LogTypes.ERROR);
                     sendResponse(new ErrorResponseModel(e));
                 }
             }
@@ -69,7 +72,7 @@ export default class CommandManager {
                     let result = await ChromeTab.executeScript(data.tabId, data.injectDetails);
                     sendResponse(new ExecuteScriptResponseModel(result));
                 } catch (e) {
-                    Logger.error(e);
+                    this.logger.send(e, LogTypes.ERROR);
                     sendResponse(new ErrorResponseModel(e));
                 }
             }
@@ -79,7 +82,7 @@ export default class CommandManager {
              * DEFAULT
              */
             default: {
-                Logger.error(new Error("invalid command type: " + request.command));
+                this.logger.send(new Error("Invalid command type: " + message.command), LogTypes.ERROR);
                 sendResponse(new ErrorResponseModel(new Error()));
             }
         }
@@ -94,14 +97,13 @@ export default class CommandManager {
      *     tab id of the created tab
      */
     static async createTab(): Promise<number> {
-        Logger.info("createTab - started!");
+        this.logger.send("createTab started!", LogTypes.DEBUG);
 
         // create window if automation window is null of doesn't exist
         if (this.window === null || !await ChromeWindow.exist(this.window.id)) {
             this.window = await ChromeWindow.create({url: this.facebook});
 
-            Logger.debug("createTab: no existing window! creating new window!");
-            Logger.info("createTab - successful!", this.window.tabs[0]);
+            this.logger.send("createTab: no existing window! creating new window!", LogTypes.DEBUG);
 
             return this.window.tabs[0].id;
         }
@@ -109,7 +111,7 @@ export default class CommandManager {
         // create new tab in automation window
         let tab = await ChromeTab.create({windowId: this.window.id});
 
-        Logger.info("createTab - successful!", tab);
+        this.logger.send("createTab - successful!", LogTypes.DEBUG);
         return tab.id;
     }
 }
