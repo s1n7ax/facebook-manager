@@ -6,8 +6,8 @@ import {ErrorResponseModel} from "../common/command/models/error-response-model"
 import ICommandRequestModel from "../common/command/models/i-command-request-model";
 import ExecuteScriptRequestModel from "../common/command/models/execute-script-request-model";
 import ExecuteScriptResponseModel from "../common/command/models/execute-script-response-model";
-import LoggerClient from "../log/logger-client";
-import LogTypes from "../log/log-types";
+import LoggerClient from "../common/log/logger-client";
+import LogTypes from "../common/log/log-types";
 import ScriptLevel from "../common/script-level";
 import Window = chrome.windows.Window;
 import MessageSender = chrome.runtime.MessageSender;

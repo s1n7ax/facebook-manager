@@ -1,10 +1,10 @@
 /************************************* MAIN *************************************/
 /************************************ POPUP *************************************/
 import CommandManager from "./command-manager";
-import LoggerClient from "../log/logger-client";
+import LoggerClient from "../common/log/logger-client";
 import ScriptLevel from "../common/script-level";
-import LogTypes from "../log/log-types";
-import LoggerServer from "../log/logger-server";
+import LogTypes from "../common/log/log-types";
+import LoggerServer from "../common/log/logger-server";
 
 
 let btn = document.getElementById('btn');

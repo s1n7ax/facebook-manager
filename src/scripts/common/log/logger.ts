@@ -1,6 +1,6 @@
 import LogTypes from "./log-types";
 import LogMessageModel from "./log-message-model";
-import ScriptLevel from "../common/script-level";
+import ScriptLevel from "../script-level";
 
 export default class Logger {
     public static log(logMessage: LogMessageModel) {

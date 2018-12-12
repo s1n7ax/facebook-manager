@@ -1,6 +1,6 @@
 import LogTypes from "./log-types";
 import LogMessageModel from "./log-message-model";
-import ScriptLevel from "../common/script-level";
+import ScriptLevel from "../script-level";
 import Port = chrome.runtime.Port;
 
 export default class LoggerClient {

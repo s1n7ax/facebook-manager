@@ -1,5 +1,5 @@
 import LogTypes from "./log-types";
-import ScriptLevel from "../common/script-level";
+import ScriptLevel from "../script-level";
 
 export default class LogMessageModel {
     scriptLevel: ScriptLevel;

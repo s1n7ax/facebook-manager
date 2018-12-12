@@ -1,8 +1,8 @@
 import MessageSender = chrome.runtime.MessageSender;
 import ICommandRequestModel from "../common/command/models/i-command-request-model";
 import ActionFactory from "./actions/action-factory";
-import LoggerClient from "../log/logger-client";
-import LogTypes from "../log/log-types";
+import LoggerClient from "../common/log/logger-client";
+import LogTypes from "../common/log/log-types";
 import ScriptLevel from "../common/script-level";
 import {ErrorResponseModel} from "../common/command/models/error-response-model";
 
