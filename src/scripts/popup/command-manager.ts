@@ -1,25 +1,40 @@
 import {CreateTabResponseModel} from "../command/models/create-tab-response-model";
 import {CreateTabRequestModel} from "../command/models/create-tab-request-model";
-import ExecuteScriptRequestModel from "../command/models/execute-script-request-model";
+import ICommandRequestModel from "../command/models/i-command-request-model";
+import RemoveUnacceptedResponseModel from "../command/models/remove-unaccepted-response-model";
+import RemoveUnacceptedRequestModel from "../command/models/remove-unaccepted-request-model";
 
 export default class CommandManager {
-    createTab(data: CreateTabRequestModel): Promise<CreateTabResponseModel> {
+    public async createTab(): Promise<CreateTabResponseModel> {
+        let createTabRequest = new CreateTabRequestModel();
+        return await this.sendBackgroundCommand(createTabRequest) as CreateTabResponseModel;
+    }
+
+    public async removeUnaccepted(tabId: number): Promise<RemoveUnacceptedResponseModel> {
+        let removeUnacceptedRequest = new RemoveUnacceptedRequestModel();
+        return await this.sendPageCommand(tabId, removeUnacceptedRequest) as RemoveUnacceptedResponseModel;
+    }
+
+    private sendBackgroundCommand(data: ICommandRequestModel): Promise<any> {
         return new Promise(((resolve, reject) => {
-
-            // send the message
-            chrome.runtime.sendMessage(data, response => {
-
+            chrome.runtime.sendMessage(data, (result) => {
                 if (chrome.runtime.lastError)
                     reject(chrome.runtime.lastError);
                 else
-                    resolve(response as CreateTabResponseModel);
+                    resolve(result);
             });
+
         }));
     }
 
-    executeScript(data: ExecuteScriptRequestModel): Promise<Array<any>> {
+    private sendPageCommand(tabId: number, data: ICommandRequestModel): Promise<any> {
         return new Promise(((resolve, reject) => {
-            chrome.runtime.sendMessage(data, )
+            chrome.tabs.sendMessage(tabId, data, (result) => {
+                if(chrome.runtime.lastError)
+                    reject(chrome.runtime.lastError);
+                else
+                    resolve(result);
+            });
         }));
     }
 }
