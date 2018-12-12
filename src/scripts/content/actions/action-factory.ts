@@ -2,6 +2,7 @@ import CommandType from "../../command/command-type";
 import IPageAction from "./i-page-action";
 import ActionClick from "./action-click";
 import ActionWait from "./action-wait";
+import ActionRemoveUnaccepted from "./action-remove-unaccepted";
 
 export default class ActionFactory {
     private static actionMap: Map<CommandType, IPageAction> = ActionFactory.getActionMap();
@@ -11,6 +12,7 @@ export default class ActionFactory {
 
         actionMap.set(CommandType.CLICK, ActionClick);
         actionMap.set(CommandType.WAIT, ActionWait);
+        actionMap.set(CommandType.REMOVE_UNACCEPTED, ActionRemoveUnaccepted);
 
         return actionMap;
     }
