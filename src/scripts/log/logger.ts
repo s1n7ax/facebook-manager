@@ -1,33 +1,58 @@
+import LogTypes from "./log-types";
+import LogMessageModel from "./log-message-model";
+import ScriptLevel from "../common/script-level";
+
 export default class Logger {
-    static info(message: string, data?: any) {
+    public static log(logMessage: LogMessageModel) {
+        let logMethod: Function;
+
+        switch (logMessage.logType) {
+
+            case LogTypes.INFO: { logMethod = this.info }
+                break;
+
+            case LogTypes.WARN: { logMethod = this.warn }
+                break;
+
+            case LogTypes.ERROR: { logMethod = this.error }
+                break;
+
+            case LogTypes.DEBUG: { logMethod = this.debug }
+                break;
+        }
+
+        logMethod(logMessage.scriptLevel, logMessage.message, logMessage.data);
+    }
+
+    private static info(scriptLevel: ScriptLevel, message: string, data?: any) {
         data = !data && {};
-        message = `[INFO] ${this.getTimestamp()} ${message}`;
+        message = `[${scriptLevel}] [INFO]  ${Logger.getTimestamp()} ${message}`;
 
         console.log(message, data);
     }
 
-    static warn(message: string, data?: any) {
+    private static warn(scriptLevel: ScriptLevel, message: string, data?: any) {
         data = !data && {};
-        message = `[WARN] ${this.getTimestamp()} ${message}`;
+        message = `[${scriptLevel}] [WARN] ${Logger.getTimestamp()} ${message}`;
 
         console.warn(message, data);
     }
 
-    static error(error: Error, data?: any) {
+    private static error(scriptLevel: ScriptLevel, error: Error, data?: any) {
         data = !data && {};
-        let message = `[ERROR] ${this.getTimestamp()} ${error.message}`;
+        let message = `[${scriptLevel}] [ERROR] ${Logger.getTimestamp()} ${error.message}`;
 
         console.error(message, error, data);
     }
 
-    static debug(message: string, data?: any) {
+    private static debug(scriptLevel: ScriptLevel, message: string, data?: any) {
         data = !data && {};
-        message = `[DEGUB] ${this.getTimestamp()} ${message}`;
+        message = `[${scriptLevel}] [DEGUB] ${Logger.getTimestamp()} ${message}`;
 
         console.log(message, data);
     }
 
-    static getTimestamp(date?: Date) {
+    private static getTimestamp(date?: Date) {
         date = !date && new Date();
 
         let year = date.getFullYear();
