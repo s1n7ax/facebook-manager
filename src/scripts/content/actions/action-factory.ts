@@ -1,4 +1,4 @@
-import CommandType from "../../command/command-type";
+import CommandType from "../../common/command/command-type";
 import IPageAction from "./i-page-action";
 import ActionClick from "./action-click";
 import ActionWait from "./action-wait";

@@ -1,6 +1,6 @@
 import StaticImplements from "../../common/static-implements";
 import IPageAction from "./i-page-action";
-import NavigateRequestModel from "../../command/models/navigate-request-model";
+import NavigateRequestModel from "../../common/command/models/navigate-request-model";
 
 @StaticImplements<IPageAction>()
 export default class ActionNavigate {

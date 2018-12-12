@@ -1,4 +1,4 @@
-import By from "../../content/locators/by";
+import By from "../../../content/locators/by";
 import CommandType from "../command-type";
 import ICommandRequestModel from "./i-command-request-model";
 

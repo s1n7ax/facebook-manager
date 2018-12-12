@@ -1,9 +1,9 @@
 import IPageAction from "./i-page-action";
 import StaticImplements from "../../common/static-implements";
 import Locate from "../locators/locate";
-import ClickRequestModel from "../../command/models/click-request-model";
+import ClickRequestModel from "../../common/command/models/click-request-model";
 import By from "../locators/by";
-import ClickResponseModel from "../../command/models/click-response-model";
+import ClickResponseModel from "../../common/command/models/click-response-model";
 
 
 /**

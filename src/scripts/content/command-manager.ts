@@ -1,10 +1,10 @@
 import MessageSender = chrome.runtime.MessageSender;
-import ICommandRequestModel from "../command/models/i-command-request-model";
+import ICommandRequestModel from "../common/command/models/i-command-request-model";
 import ActionFactory from "./actions/action-factory";
 import LoggerClient from "../log/logger-client";
 import LogTypes from "../log/log-types";
 import ScriptLevel from "../common/script-level";
-import {ErrorResponseModel} from "../command/models/error-response-model";
+import {ErrorResponseModel} from "../common/command/models/error-response-model";
 
 export default class CommandManager {
     static readonly logger = new LoggerClient(ScriptLevel.CONTENT);

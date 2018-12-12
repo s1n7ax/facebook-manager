@@ -1,8 +1,8 @@
-import {CreateTabResponseModel} from "../command/models/create-tab-response-model";
-import {CreateTabRequestModel} from "../command/models/create-tab-request-model";
-import ICommandRequestModel from "../command/models/i-command-request-model";
-import RemoveUnacceptedResponseModel from "../command/models/remove-unaccepted-response-model";
-import RemoveUnacceptedRequestModel from "../command/models/remove-unaccepted-request-model";
+import {CreateTabResponseModel} from "../common/command/models/create-tab-response-model";
+import {CreateTabRequestModel} from "../common/command/models/create-tab-request-model";
+import ICommandRequestModel from "../common/command/models/i-command-request-model";
+import RemoveUnacceptedResponseModel from "../common/command/models/remove-unaccepted-response-model";
+import RemoveUnacceptedRequestModel from "../common/command/models/remove-unaccepted-request-model";
 
 export default class CommandManager {
     public async createTab(): Promise<CreateTabResponseModel> {

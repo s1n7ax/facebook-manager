@@ -1,6 +1,6 @@
 import IPageAction from "./i-page-action";
 import StaticImplements from "../../common/static-implements";
-import WaitRequestModel from "../../command/models/wait-request-model";
+import WaitRequestModel from "../../common/command/models/wait-request-model";
 
 @StaticImplements<IPageAction>()
 export default class ActionWait {
