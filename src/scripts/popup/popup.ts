@@ -1,17 +1,28 @@
-import ICommandRequestModel from "../command/models/i-command-request-model";
-import CommandType from "../command/command-type";
-import {CreateTabResponseModel} from "../command/models/create-tab-response-model";
+/************************************* MAIN *************************************/
+/************************************ POPUP *************************************/
+import CommandManager from "./command-manager";
+import LoggerClient from "../log/logger-client";
+import ScriptLevel from "../common/script-level";
+import LogTypes from "../log/log-types";
+import LoggerServer from "../log/logger-server";
 
-document.getElementById("btn").addEventListener("click", () => {
-    // request data
-    let data = new ICommandRequestModel(CommandType.CREATE_TAB);
 
-    // send message
-    chrome.runtime.sendMessage(data, response => {
+let btn = document.getElementById('btn');
+btn.addEventListener('click', async (event) => {
+    console.log("start removed unaccepted friend requests");
 
-        // response
-        let res = response as CreateTabResponseModel;
+    let cm = new CommandManager();
+    let data = await cm.createTab();
 
-        console.log("tab id: " + res.tabId)
-    });
+    await cm.removeUnaccepted(data.tabId);
+
+    console.log("removing friends ended!!!");
 });
+
+
+/**
+ * Starting the logger
+ */
+let loggerServer = new LoggerServer();
+loggerServer.start();
+

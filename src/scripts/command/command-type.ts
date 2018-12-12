@@ -9,6 +9,7 @@ enum CommandType {
     TYPE,
     SELECT,
     WAIT,
+    REMOVE_UNACCEPTED
 }
 
 export default CommandType;

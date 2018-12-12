@@ -1,3 +1,6 @@
+/************************************* MAIN *************************************/
+/********************************** BACKGROUND **********************************/
+
 /**
  * Listen to one time messages
  */
@@ -27,10 +30,3 @@ chrome.browserAction.onClicked.addListener(async () => {
         type: "popup"
     });
 });
-
-
-
-
-
-
-
