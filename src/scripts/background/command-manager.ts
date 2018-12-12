@@ -1,11 +1,11 @@
-import CommandType from "../common/command/command-type";
+import CommandType from "../common/commands/command-type";
 import ChromeWindow from "./chrome-window";
 import ChromeTab from "./chrome-tab";
-import {CreateTabResponseModel} from "../common/command/models/create-tab-response-model";
-import {ErrorResponseModel} from "../common/command/models/error-response-model";
-import ICommandRequestModel from "../common/command/models/i-command-request-model";
-import ExecuteScriptRequestModel from "../common/command/models/execute-script-request-model";
-import ExecuteScriptResponseModel from "../common/command/models/execute-script-response-model";
+import {CreateTabResponseModel} from "../common/commands/models/create-tab-response-model";
+import {ErrorResponseModel} from "../common/commands/models/error-response-model";
+import ICommandRequestModel from "../common/commands/models/i-command-request-model";
+import ExecuteScriptRequestModel from "../common/commands/models/execute-script-request-model";
+import ExecuteScriptResponseModel from "../common/commands/models/execute-script-response-model";
 import LoggerClient from "../common/log/logger-client";
 import LogTypes from "../common/log/log-types";
 import ScriptLevel from "../common/script-level";
@@ -42,7 +42,7 @@ export default class CommandManager {
     static async handleCommands(request: any, sender: MessageSender, sendResponse: (response: any) => void): Promise<void> {
         let message = request as ICommandRequestModel;
 
-        this.logger.send("Background command received", LogTypes.INFO, request);
+        this.logger.send("Background commands received", LogTypes.INFO, request);
 
         switch (message.command) {
 
@@ -82,7 +82,7 @@ export default class CommandManager {
              * DEFAULT
              */
             default: {
-                this.logger.send(new Error("Invalid command type: " + message.command), LogTypes.ERROR);
+                this.logger.send(new Error("Invalid commands type: " + message.command), LogTypes.ERROR);
                 sendResponse(new ErrorResponseModel(new Error()));
             }
         }

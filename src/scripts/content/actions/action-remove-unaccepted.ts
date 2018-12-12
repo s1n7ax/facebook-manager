@@ -1,6 +1,6 @@
 import StaticImplements from "../../common/static-implements";
 import IPageAction from "./i-page-action";
-import RemoveUnacceptedRequestModel from "../../common/command/models/remove-unaccepted-request-model";
+import RemoveUnacceptedRequestModel from "../../common/commands/models/remove-unaccepted-request-model";
 import Navigate from "./action-navigate";
 import SentRequestsPage from "../pages/sent-requests-page";
 import ActionWait from "./action-wait";

@@ -1,16 +1,16 @@
 import MessageSender = chrome.runtime.MessageSender;
-import ICommandRequestModel from "../common/command/models/i-command-request-model";
+import ICommandRequestModel from "../common/commands/models/i-command-request-model";
 import ActionFactory from "./actions/action-factory";
 import LoggerClient from "../common/log/logger-client";
 import LogTypes from "../common/log/log-types";
 import ScriptLevel from "../common/script-level";
-import {ErrorResponseModel} from "../common/command/models/error-response-model";
+import {ErrorResponseModel} from "../common/commands/models/error-response-model";
 
 export default class CommandManager {
     static readonly logger = new LoggerClient(ScriptLevel.CONTENT);
     static async handleCommands(request: any, sender: MessageSender, sendResponse: (response: any) => void): Promise<void> {
 
-        this.logger.send("background command received", LogTypes.INFO, request);
+        this.logger.send("background commands received", LogTypes.INFO, request);
 
         let message = request as ICommandRequestModel;
 
@@ -21,7 +21,7 @@ export default class CommandManager {
             // send response
             sendResponse(result);
 
-            this.logger.send("command completed!", LogTypes.INFO);
+            this.logger.send("commands completed!", LogTypes.INFO);
         } catch (e) {
 
             // send response
