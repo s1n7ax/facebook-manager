@@ -1,3 +1,2 @@
-export default class NavigateResponseModel {
-    
-}
+export default interface NavigateResponseModel {}
+

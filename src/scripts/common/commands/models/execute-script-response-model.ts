@@ -1,7 +1,4 @@
-export default class ExecuteScriptResponseModel {
+export default interface ExecuteScriptResponseModel {
     result: Array<any>;
-
-    constructor(result: Array<any>) {
-        this.result = result;
-    }
 }
+

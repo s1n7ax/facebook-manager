@@ -1,15 +1,6 @@
-import By from "../../../content/locators/by";
-import CommandType from "../command-type";
-import ICommandRequestModel from "./i-command-request-model";
+import By from '../../../content/locators/by';
 
-export default class ClickRequestModel implements ICommandRequestModel {
-    command: CommandType = CommandType.CLICK;
+export default interface ClickRequestModel {
     by: By;
     value: string;
-
-
-    constructor(by: By, value: string) {
-        this.by = by;
-        this.value = value;
-    }
 }

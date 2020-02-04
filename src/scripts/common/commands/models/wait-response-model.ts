@@ -1,5 +1,2 @@
-import CommandType from "../command-type";
-import By from "../../../content/locators/by";
+export default interface WaitResponseModel {}
 
-export default class WaitResponseModel {
-}

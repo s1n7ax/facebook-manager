@@ -1,14 +1,5 @@
-import InjectDetails = chrome.tabs.InjectDetails;
-import ICommandRequestModel from "./i-command-request-model";
-import CommandType from "../command-type";
+import { ExtensionTypes } from 'webextension-polyfill-ts';
 
-export default class ExecuteScriptRequestModel implements ICommandRequestModel {
-    command: CommandType = CommandType.EXECUTE_SCRIPT;
-    tabId: number;
-    injectDetails: InjectDetails;
+type InjectDetails = ExtensionTypes.InjectDetails;
 
-    constructor(tabId: number, injectDetails: InjectDetails) {
-        this.tabId = tabId;
-        this.injectDetails = injectDetails
-    }
-}
+export default InjectDetails;

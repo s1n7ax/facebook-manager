@@ -2,17 +2,16 @@
 /*********************************** CONTENT ************************************/
 
 /*
-handling commands externalized to a separate async method
-making addListener callback an async will hold the return true statement until completion of async methods
-as a result sender callback will be called due to `undefined` return
+ * init global properties & listeners within content script
  */
-import CommandManager from "./command-manager";
-import LoggerClient from "../common/log/logger-client";
-import ScriptLevel from "../common/script-level";
-import LogTypes from "../common/log/log-types";
+import Logger from 'js-logger';
+import { browser } from 'webextension-polyfill-ts';
+import CommandManager from './command-manager';
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    CommandManager.handleCommands(request, sender, sendResponse);
+Logger.useDefaults();
+Logger.setLevel(Logger.TRACE);
+Logger.setLevel(Logger.DEBUG);
 
-    return true;
+browser.runtime.onMessage.addListener(async (request: any) => {
+    return await CommandManager.handleCommands(request);
 });

@@ -1,12 +1,3 @@
-import ICommandRequestModel from "./i-command-request-model";
-import CommandType from "../command-type";
-
-export default class NavigateRequestModel implements ICommandRequestModel {
-    readonly command = CommandType.NAVIGATE;
+export default interface NavigateRequestModel {
     url: string;
-
-    constructor(url: string) {
-        this.url = url;
-    }
-
 }

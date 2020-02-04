@@ -1,2 +1,2 @@
-export default class TypeResponseModel {
-}
+export default interface TypeResponseModel {}
+

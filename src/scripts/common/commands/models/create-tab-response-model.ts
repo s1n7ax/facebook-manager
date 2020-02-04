@@ -1,7 +1,6 @@
-export class CreateTabResponseModel {
-    tabId: number;
+import { Tabs } from 'webextension-polyfill-ts';
 
-    constructor(tabId: number) {
-        this.tabId = tabId;
-    }
-}
+type CreateTabResponseModel = Tabs.Tab;
+
+export default CreateTabResponseModel;
+

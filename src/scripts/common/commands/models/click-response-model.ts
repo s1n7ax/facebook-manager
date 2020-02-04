@@ -1,2 +1,2 @@
-export default class ClickResponseModel {
-}
+export default interface ClickResponseModel {}
+

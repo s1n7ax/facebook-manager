@@ -1,13 +1,3 @@
-import CommandType from "../command-type";
-
-export default class WaitRequestModel {
-    command: CommandType = CommandType.WAIT;
+export default interface WaitRequestModel {
     ms: number;
-
-    /**
-     * @param ms - time in milliseconds
-     */
-    constructor(ms: number) {
-        this.ms = ms;
-    }
 }

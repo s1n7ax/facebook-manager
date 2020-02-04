@@ -1,3 +1,2 @@
-export default class RemoveUnacceptedResponseModel {
+export default interface RemoveUnacceptedResponseModel {}
 
-}

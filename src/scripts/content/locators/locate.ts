@@ -1,12 +1,11 @@
-import By from "./by";
-import NoSuchElementFoundException from "../../common/exceptions/no-such-element-found-exception";
-import UnsupportedOperationException from "../../common/exceptions/unsupported-operation-exception";
+import By from './by';
+import NoSuchElementFoundException from '../../common/exceptions/no-such-element-found-exception';
+import UnsupportedOperationException from '../../common/exceptions/unsupported-operation-exception';
 
 /**
  * implements base helper methods to locate elements in a page
  */
 export default class Locate {
-
     /**
      * returns single element found by the given inputs
      *
@@ -17,7 +16,6 @@ export default class Locate {
      */
     public static getElement(by: By, value: string): HTMLElement {
         switch (by) {
-
             /**
              * by xpath
              */
@@ -25,7 +23,9 @@ export default class Locate {
                 let elements = this.getElementsByXpath(value);
 
                 if (elements.length === 0)
-                    throw new NoSuchElementFoundException(`No element found with locator type: ${By[by]}, value: ${value}`);
+                    throw new NoSuchElementFoundException(
+                        `No element found with locator type: ${By[by]}, value: ${value}`
+                    );
 
                 return elements[0];
             }
@@ -37,7 +37,9 @@ export default class Locate {
                 let ele = document.getElementById(value);
 
                 if (ele === null)
-                    throw new NoSuchElementFoundException(`No element found with locator type: ${By[by]}, value: ${value}`);
+                    throw new NoSuchElementFoundException(
+                        `No element found with locator type: ${By[by]}, value: ${value}`
+                    );
 
                 return ele;
             }
@@ -49,9 +51,11 @@ export default class Locate {
                 let elements = this.getElementsByClassName(value);
 
                 if (elements.length === 0)
-                    throw new NoSuchElementFoundException(`No element found with locator type: ${By[by]}, value: ${value}`);
+                    throw new NoSuchElementFoundException(
+                        `No element found with locator type: ${By[by]}, value: ${value}`
+                    );
 
-                return <HTMLElement> elements.item(0);
+                return <HTMLElement>elements.item(0);
             }
 
             /**
@@ -61,9 +65,11 @@ export default class Locate {
                 let elements = this.getElementsByTagName(value);
 
                 if (elements.length === 0)
-                    throw new NoSuchElementFoundException(`No element found with locator type: ${By[by]}, value: ${value}`);
+                    throw new NoSuchElementFoundException(
+                        `No element found with locator type: ${By[by]}, value: ${value}`
+                    );
 
-                return <HTMLElement> elements.item(0)
+                return <HTMLElement>elements.item(0);
             }
 
             default: {
@@ -72,7 +78,7 @@ export default class Locate {
         }
     }
 
-   /**
+    /**
      * returns array of elements found by the given inputs
      *
      * @param by - locator strategy that is used to locate the element
@@ -80,7 +86,6 @@ export default class Locate {
      */
     public static getElements(by: By, value: string): Array<HTMLElement> {
         switch (by) {
-
             /**
              * by xpath
              */
@@ -88,7 +93,9 @@ export default class Locate {
                 let elements = this.getElementsByXpath(value);
 
                 if (elements.length === 0)
-                    throw new NoSuchElementFoundException(`No element found with locator type: ${By[by]}, value: ${value}`);
+                    throw new NoSuchElementFoundException(
+                        `No element found with locator type: ${By[by]}, value: ${value}`
+                    );
 
                 return elements;
             }
@@ -99,8 +106,7 @@ export default class Locate {
             case By.ID: {
                 let ele = document.getElementById(value);
 
-                if (ele === null)
-                    return [];
+                if (ele === null) return [];
 
                 return [ele];
             }
@@ -132,18 +138,23 @@ export default class Locate {
             null
         );
 
-        for (let ele = <HTMLElement> result.iterateNext(); ele !== null;) {
+        for (let ele = <HTMLElement>result.iterateNext(); ele !== null; ) {
             elements.push(ele);
         }
 
         return elements;
     }
 
-    public static getElementsByClassName(className: string): HTMLCollectionOf<Element> {
+    public static getElementsByClassName(
+        className: string
+    ): HTMLCollectionOf<Element> {
         return document.getElementsByClassName(className);
     }
 
-    public static getElementsByTagName(name: string): NodeListOf<Element> {
+    public static getElementsByTagName(
+        name: string
+    ): HTMLCollectionOf<Element> {
         return document.getElementsByTagName(name);
     }
 }
+

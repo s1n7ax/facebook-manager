@@ -1,9 +1,5 @@
-import ICommandRequestModel from "./i-command-request-model";
-import CommandType from "../command-type";
+import { Tabs } from 'webextension-polyfill-ts';
 
-export class CreateTabRequestModel implements ICommandRequestModel {
-    command: CommandType = CommandType.CREATE_TAB;
+type CreateTabRequestModel = Tabs.CreateCreatePropertiesType;
 
-    constructor() {
-    }
-}
+export default CreateTabRequestModel;

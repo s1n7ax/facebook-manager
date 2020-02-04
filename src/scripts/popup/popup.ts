@@ -1,28 +1,42 @@
 /************************************* MAIN *************************************/
 /************************************ POPUP *************************************/
-import CommandManager from "./command-manager";
-import LoggerClient from "../common/log/logger-client";
-import ScriptLevel from "../common/script-level";
-import LogTypes from "../common/log/log-types";
-import LoggerServer from "../common/log/logger-server";
+import Logger from 'js-logger';
+import { assertIsNotNullOrUndefined } from '../common/assertions';
+import CommandManager from './command-manager';
 
+const logger = Logger.get('main()');
 
-let btn = document.getElementById('btn');
-btn.addEventListener('click', async (event) => {
-    console.log("start removed unaccepted friend requests");
+Logger.useDefaults();
+Logger.setLevel(Logger.INFO);
+Logger.setLevel(Logger.TRACE);
+Logger.setLevel(Logger.DEBUG);
 
-    let cm = new CommandManager();
-    let data = await cm.createTab();
+const removeUnacceptedReqButton = document.getElementById(
+    'remove-unaccepted-requests'
+);
 
-    await cm.removeUnaccepted(data.tabId);
+removeUnacceptedReqButton?.addEventListener('click', async () => {
+    logger.info('remove Remove Unaccepted Requests');
 
-    console.log("removing friends ended!!!");
+    const url =
+        'https://www.facebook.com/friends/requests/?fcref=ft&outgoing=1';
+
+    const { id } = await CommandManager.createTab({
+        url
+    });
+
+    assertIsNotNullOrUndefined(id, {
+        message: '[main()] id not found in the created tab'
+    });
+
+    await CommandManager.navigate(id, { url });
+
+    // await CommandManager.wait(5);
+    // await CommandManager.click(
+    //     tabId,
+    //     By.XPATH,
+    //     "//a[text()='See More Requests']"
+    // );
+
+    console.log('removing friends ended!!!');
 });
-
-
-/**
- * Starting the logger
- */
-let loggerServer = new LoggerServer();
-loggerServer.start();
-

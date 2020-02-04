@@ -1,32 +1,32 @@
-import MessageSender = chrome.runtime.MessageSender;
-import ICommandRequestModel from "../common/commands/models/i-command-request-model";
-import ActionFactory from "./actions/action-factory";
-import LoggerClient from "../common/log/logger-client";
-import LogTypes from "../common/log/log-types";
-import ScriptLevel from "../common/script-level";
-import {ErrorResponseModel} from "../common/commands/models/error-response-model";
+import Logger from 'js-logger';
+import CommandType from '../common/commands/command-type';
+import CommandRequestModel from '../common/commands/models/command-request-model';
+import ActionFactory from './actions/action-factory';
+
+const logger = Logger.get('Content::CommandManager');
 
 export default class CommandManager {
-    static readonly logger = new LoggerClient(ScriptLevel.CONTENT);
-    static async handleCommands(request: any, sender: MessageSender, sendResponse: (response: any) => void): Promise<void> {
+    static async handleCommands(data: any) {
+        logger.info('>>> background command received', data);
 
-        this.logger.send("background commands received", LogTypes.INFO, request);
+        let message = data as CommandRequestModel;
 
-        let message = request as ICommandRequestModel;
+        switch (message.command) {
+            case CommandType.READY: {
+                return true;
+            }
 
-
-        try {
-            let result: any = await ActionFactory.get(message.command).run(request);
-
-            // send response
-            sendResponse(result);
-
-            this.logger.send("commands completed!", LogTypes.INFO);
-        } catch (e) {
-
-            // send response
-            sendResponse(new ErrorResponseModel(e));
-            this.logger.send(e, LogTypes.INFO);
+            default: {
+                try {
+                    return await ActionFactory.get(message.command).run(
+                        message.data
+                    );
+                } catch (e) {
+                    return {
+                        error: e
+                    };
+                }
+            }
         }
     }
 }

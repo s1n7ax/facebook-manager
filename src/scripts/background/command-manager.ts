@@ -1,16 +1,16 @@
-import CommandType from "../common/commands/command-type";
-import ChromeWindow from "./chrome-window";
-import ChromeTab from "./chrome-tab";
-import {CreateTabResponseModel} from "../common/commands/models/create-tab-response-model";
-import {ErrorResponseModel} from "../common/commands/models/error-response-model";
-import ICommandRequestModel from "../common/commands/models/i-command-request-model";
-import ExecuteScriptRequestModel from "../common/commands/models/execute-script-request-model";
-import ExecuteScriptResponseModel from "../common/commands/models/execute-script-response-model";
-import LoggerClient from "../common/log/logger-client";
-import LogTypes from "../common/log/log-types";
-import ScriptLevel from "../common/script-level";
+import Logger from 'js-logger';
+import { browser, Tabs } from 'webextension-polyfill-ts';
+import { assertIsNotNullOrUndefined } from '../common/assertions';
+import CommandType from '../common/commands/command-type';
+import CommandRequestModel from '../common/commands/models/command-request-model';
+import CreateTabRequestModel from '../common/commands/models/create-tab-request-model';
+import { methodDebugLog } from '../common/logger';
 import Window = chrome.windows.Window;
 import MessageSender = chrome.runtime.MessageSender;
+type Tab = Tabs.Tab;
+type CreateProperties = Tabs.CreateCreatePropertiesType;
+
+const logger = Logger.get('CommandManager');
 
 /**
  * CommandManager defines high level methods
@@ -22,68 +22,55 @@ import MessageSender = chrome.runtime.MessageSender;
  *      url of the application
  */
 export default class CommandManager {
-    private static window: Window = null;
-    private static facebook = "https://www.facebook.com";
-    private static logger = new LoggerClient(ScriptLevel.Background);
-
-
     /**
      * handles all the commands, background gets via messaging
-     *
-     * @param request
-     *      request data
-     *
-     * @param sender
-     *      sender details
-     *
-     * @param sendResponse
-     *      message response callback
+     * @param request request data
+     * @param sender sender details
+     * @param sendResponse message response callback
      */
-    static async handleCommands(request: any, sender: MessageSender, sendResponse: (response: any) => void): Promise<void> {
-        let message = request as ICommandRequestModel;
-
-        this.logger.send("Background commands received", LogTypes.INFO, request);
+    @methodDebugLog()
+    static async handleCommands(
+        request: any,
+        _sender: MessageSender,
+        sendResponse: (response: any) => void
+    ): Promise<void> {
+        const message = request as CommandRequestModel;
 
         switch (message.command) {
-
             /**
              * CREATE_TAB
              */
-            case CommandType.CREATE_TAB: {
-                let tabId: number;
+            case CommandType.CREATE_TAB:
+                {
+                    logger.debug('handleCommands():: creating tab', message);
 
-                try {
-                    tabId = await CommandManager.createTab();
-                    sendResponse(new CreateTabResponseModel(tabId));
-                } catch (e) {
-                    this.logger.send(e, LogTypes.ERROR);
-                    sendResponse(new ErrorResponseModel(e));
+                    const data = message.data as CreateTabRequestModel;
+                    let tab: Tab;
+
+                    try {
+                        tab = await CommandManager.createTab(data);
+                        sendResponse(tab);
+                        logger.debug(
+                            'handleCommands():: created tab, tabId::',
+                            tab
+                        );
+                    } catch (e) {
+                        logger.error(
+                            'handleCommands():: creating tab failed',
+                            e
+                        );
+                        sendResponse({ e });
+                    }
                 }
-            }
-                break;
-
-            /**
-             * EXECUTE_SCRIPT
-             */
-            case CommandType.EXECUTE_SCRIPT: {
-                let data = request as ExecuteScriptRequestModel;
-
-                try {
-                    let result = await ChromeTab.executeScript(data.tabId, data.injectDetails);
-                    sendResponse(new ExecuteScriptResponseModel(result));
-                } catch (e) {
-                    this.logger.send(e, LogTypes.ERROR);
-                    sendResponse(new ErrorResponseModel(e));
-                }
-            }
                 break;
 
             /**
              * DEFAULT
              */
             default: {
-                this.logger.send(new Error("Invalid commands type: " + message.command), LogTypes.ERROR);
-                sendResponse(new ErrorResponseModel(new Error()));
+                sendResponse({
+                    error: new Error('CommandType is not defined')
+                });
             }
         }
     }
@@ -96,22 +83,11 @@ export default class CommandManager {
      * @return Promise<number>
      *     tab id of the created tab
      */
-    static async createTab(): Promise<number> {
-        this.logger.send("createTab started!", LogTypes.DEBUG);
+    @methodDebugLog()
+    static async createTab(createProperties: CreateProperties): Promise<Tab> {
+        const tab = await browser.tabs.create(createProperties);
+        assertIsNotNullOrUndefined(tab.id);
 
-        // create window if automation window is null of doesn't exist
-        if (this.window === null || !await ChromeWindow.exist(this.window.id)) {
-            this.window = await ChromeWindow.create({url: this.facebook});
-
-            this.logger.send("createTab: no existing window! creating new window!", LogTypes.DEBUG);
-
-            return this.window.tabs[0].id;
-        }
-
-        // create new tab in automation window
-        let tab = await ChromeTab.create({windowId: this.window.id});
-
-        this.logger.send("createTab - successful!", LogTypes.DEBUG);
-        return tab.id;
+        return tab;
     }
 }
